@@ -1,7 +1,7 @@
 
 <div align="center">
 
-<h1>HyperFree: A Channel-adaptive and Tuning-free Foundation Model for Hyperspectral Remote Sensing Imagery</h1>
+<h1>HyperFree: A Channel-adaptive and Tuning-free Foundation Model for Hyperspectral Remote Sensing Imagery (CVPR2025)</h1>
 
 [Jingtao Li](https://jingtao-li-cver.github.io/home_page/)<sup>∗</sup>, [Yingyi Liu]()<sup>∗</sup>, [Xinyu Wang](https://jszy.whu.edu.cn/WangXinyu/zh_CN/index.htm)<sup>†</sup>, [Yunning Peng](), [Chen Sun](), [Shaoyu Wang](), [Zhendong Sun](), [Tian Ke](), [Xiao Jiang](), [Tangwei Lu](), [Anran Zhao](), [Yanfei Zhong](http://rsidea.whu.edu.cn/zhongyanfei.htm)<sup>†</sup>
 
