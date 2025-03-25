@@ -21,7 +21,7 @@
 <p align="center">
   <a href="#Update">Update</a> |
   <a href="#-Outline">Outline</a> |
-  <a href="#-Hyper-Seg Data Engine">Hyper-Seg Data Engine</a> |
+  <a href="#-Hyper-Seg-Data-Engine">Hyper-Seg Data Engine</a> |
   <a href="#-Pretrained Checkpoint">Pretrained Checkpoint</a> |
   <a href="#-Tuning-free Usage">Tuning-free Usage</a> |
   <a href="#-statement">Statement</a>
