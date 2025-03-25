@@ -19,12 +19,12 @@
 </p >
 
 <p align="center">
-  <a href="#Update">Update</a> |
+  <a href="#-Update">Update</a> |
   <a href="#-Outline">Outline</a> |
   <a href="#-Hyper-Seg-Data-Engine">Hyper-Seg Data Engine</a> |
-  <a href="#-Pretrained Checkpoint">Pretrained Checkpoint</a> |
-  <a href="#-Tuning-free Usage">Tuning-free Usage</a> |
-  <a href="#-statement">Statement</a>
+  <a href="#-Pretrained-Checkpoint">Pretrained Checkpoint</a> |
+  <a href="#-Tuning-free-Usage">Tuning-free Usage</a> |
+  <a href="#-Acknowledgement">Acknowledgement</a>
 </p >
 
 # 🔥 Update
@@ -133,6 +133,6 @@ The paper has
 ``` -->
 
 
-# 💖 Thanks
+# 💖 Acknowledgement
 This project is based on [SAM](https://segment-anything.com/). Thank them for bringing prompt engineering from NLP into the visual field!<br>
 
