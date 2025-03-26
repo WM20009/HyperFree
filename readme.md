@@ -126,11 +126,16 @@ wavelengths = [429.410004,  439.230011,  449.059998,......]
 GSD = 30 # Ground sampling distance (m/pixel)
 ratio_threshold = 0.76 # a float, pixels with the change score higher than ratio_threshold quantile are considered as changes
 ```
-<!-- # ⭐ Citation
+# ⭐ Citation
 
 ```
-The paper has 
-``` -->
+@inproceedings{li2025hyperfree,
+  title={HyperFree: A Channel-adaptive and Tuning-free Foundation Model for Hyperspectral Remote Sensing Imagery},
+  author={Li Jingtao and Liu yingyi and Wang Xinyu and Peng Yunning and Sun Chen and Wang Shaoyu and Sun Zhendong and Ke Tian and Jiang Xiao and Lu Tangwei and Zhao anran and Zhong Yanfei},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2025}
+}
+``` 
 
 
 # 💖 Acknowledgement
