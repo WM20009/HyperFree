@@ -15,7 +15,7 @@
     <a href="https://github.com/Jingtao-Li-CVer/HyperFree" target="_blank">Code</a> |
     <a href="https://www.wjx.cn/vm/e84nlpp.aspx#" target="_blank">Hyper-Seg Engine</a> |
   <a href="https://rsidea.whu.edu.cn/hyperfree.htm" target="_blank">Website</a> |
-  <a href="https://example.com/update" target="_blank">WeChat</a> 
+  <a href="https://mp.weixin.qq.com/s/nm8VnTcXvvS_aEatX0543A" target="_blank">WeChat</a> 
 </p >
 
 <p align="center">
