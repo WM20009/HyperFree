@@ -180,7 +180,20 @@ class Evaluator(object):
     def reset(self):
         self.confusion_matrix = np.zeros((self.num_class,) * 2)
         self.pre_cal = False
-
+        
+def enhance_contrast_histogram(hsi):
+    hsi = np.array(hsi, dtype=np.float32)    
+    H, W, C = hsi.shape    
+    enhanced_hsi = np.zeros_like(hsi, dtype=np.float32)
+    
+    for c in range(C):
+        band = hsi[:, :, c]   
+        band_scaled = cv2.normalize(band, None, 0, 500, cv2.NORM_MINMAX, dtype=cv2.CV_8U)
+        enhanced_band = cv2.equalizeHist(band_scaled)
+        enhanced_hsi[:, :, c] = enhanced_band
+    
+    return enhanced_hsi
+    
 def set_random_seed(seed, deterministic=True):
     random.seed(seed)
     np.random.seed(seed)
