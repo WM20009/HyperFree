@@ -7,7 +7,7 @@ import numpy as np
 import torch
 
 from HyperFree import SamAutomaticMaskGenerator, HyperFree_model_registry
-from prompt_mask_feature_interaction import save_heatmap, hyperspectral_anomaly_detection, compute_auc
+from prompt_mask_feature_interaction import save_heatmap, hyperspectral_anomaly_detection, compute_auc, enhance_contrast_histogram
 import scipy.io as sio
 
 """
@@ -62,7 +62,8 @@ GSDS = 7.5 # Ground sampling distance (m/pixel)
 save_dir = "./../../Outputs/hyperspectral_anomaly_detection/" # Location to ouput anomaly heatmap
 
 if img.max() > 500:
-    img_uint8 = np.clip(img, 0, 500)
+    img_uint8 = img/(img.max()/500)
+    img_uint8 = enhance_contrast_histogram(img_uint8)
 else:
     img_normalized = (img - img.min()) / (img.max() - img.min())
     img_uint8 = (255 * img_normalized).astype(np.uint8)
