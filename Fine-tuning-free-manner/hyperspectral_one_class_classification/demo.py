@@ -10,7 +10,7 @@ import argparse
 
 from HyperFree.utils.spectral_process_utils import read_img, write_img
 from HyperFree import SamAutomaticMaskGenerator, HyperFree_model_registry
-from prompt_mask_feature_interaction import hyperspectral_OCC, show_ann, evaluate, load_wavelength
+from prompt_mask_feature_interaction import hyperspectral_OCC, show_ann, evaluate, load_wavelength, enhance_contrast_histogram
 
 """
 HyperFree
@@ -111,7 +111,8 @@ if __name__ == '__main__':
 
     img = read_img(data_path)
     if img.max() > 500:
-        img_uint8 = np.clip(img, 0, 500)
+        img = img/(img.max()/500)
+        img_uint8 = enhance_contrast_histogram(img)
     else:
         img_normalized = (img - img.min()) / (img.max() - img.min())
         img_uint8 = (255 * img_normalized).astype(np.uint8)
