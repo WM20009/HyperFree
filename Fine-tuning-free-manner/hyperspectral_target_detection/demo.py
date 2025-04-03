@@ -9,7 +9,7 @@ import torch
 from HyperFree.utils.spectral_process_utils import read_img, write_img
 from HyperFree import SamAutomaticMaskGenerator, HyperFree_model_registry
 import scipy.io as sio
-from prompt_mask_feature_interaction import Hyperspectral_TD, dilate_binary_image, save_heatmap, set_random_seed
+from prompt_mask_feature_interaction import Hyperspectral_TD, dilate_binary_image, save_heatmap, set_random_seed, enhance_contrast_histogram
 from sklearn import metrics
 
 """
@@ -49,7 +49,8 @@ img = sio.loadmat(img_pth)['data']
 gt = sio.loadmat(img_pth)['map']
 
 if img.max() > 500:
-    img_uint8 = np.clip(img, 0, 500)
+    img_uint8 = img/(img.max()/500)
+    img_uint8 = enhance_contrast_histogram(img_uint8)
 else:
     img_normalized = (img - img.min()) / (img.max() - img.min())
     img_uint8 = (255 * img_normalized).astype(np.uint8)
