@@ -8,7 +8,7 @@ import torch
 
 from HyperFree.utils.spectral_process_utils import read_img, write_img
 from HyperFree import SamAutomaticMaskGenerator, HyperFree_model_registry
-from prompt_mask_feature_interaction import Hyperspectral_CD, Evaluator, show_anns, set_random_seed
+from prompt_mask_feature_interaction import Hyperspectral_CD, Evaluator, show_anns, set_random_seed, enhance_contrast_histogram
 
 """
 HyperFree
@@ -50,15 +50,24 @@ for i in range(len(img1_paths)):
     path1 = img1_paths[i]
     path2 = img2_paths[i]
     mask_path = mask_paths[i]
+           
     img1 = read_img(path1)
-
-    img1_uint8 = np.clip(img1, 0, 500)[:,:,band_subset_start:band_subset_end]
-    img1_normalized = (img1 - img1.min())/(img1.max() - img1.min())
-    img1_uint8 = (255*img1_normalized).astype(np.uint8)[:,:,band_subset_start:band_subset_end]
+    if img1.max() > 500:
+        img1 = img1/(img1.max()/500)
+        img1 = enhance_contrast_histogram(img1)
+    else:
+        img1 = (img1 - img1.min()) / (img1.max() - img1.min())
+        img1 = (255 * img1).astype(np.uint8)
+    img1_uint8 = img1[:,:,band_subset_start:band_subset_end]
 
     img2 = read_img(path2)
-    img2_normalized = (img2 - img2.min())/(img2.max() - img2.min())
-    img2_uint8 = (255*img2_normalized).astype(np.uint8)[:,:,band_subset_start:band_subset_end]
+    if img2.max() > 500:
+        img2 = img2/(img2.max()/500)
+        img2 = enhance_contrast_histogram(img2)
+    else:
+        img2 = (img2 - img2.min()) / (img2.max() - img2.min())
+        img2 = (255 * img2).astype(np.uint8)
+    img2_uint8 = img2[:,:,band_subset_start:band_subset_end]
 
     mask = read_img(mask_path)
 
