@@ -79,7 +79,8 @@ class HyperFree_Predictor:
         self.original_size = original_image_size
         self.input_size = tuple(transformed_image.shape[-2:])
         input_image = self.model.preprocess(transformed_image)
-        self.features = self.model.image_encoder(input_image, test_mode, spectral_lengths, GSD)[-1]
+        self.multi_scale_features= self.model.image_encoder(input_image, test_mode, spectral_lengths, GSD)
+        self.features = self.multi_scale_features[-1]
         self.is_image_set = True
 
 
