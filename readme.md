@@ -24,6 +24,8 @@
   <a href="#-Hyper-Seg-Data-Engine">Hyper-Seg Data Engine</a> |
   <a href="#-Pretrained-Checkpoint">Pretrained Checkpoint</a> |
   <a href="#-Tuning-free-Usage">Tuning-free Usage</a> |
+  <a href="#-Tuning-Usage">Tuning Usage</a> |
+  <a href="#-Segent-Any-HSI-Usage">Segent Any HSI Usage</a> |
   <a href="#-Acknowledgement">Acknowledgement</a>
 </p >
 
@@ -128,6 +130,19 @@ wavelengths = [429.410004,  439.230011,  449.059998,......]
 GSD = 30 # Ground sampling distance (m/pixel)
 ratio_threshold = 0.76 # a float, pixels with the change score higher than ratio_threshold quantile are considered as changes
 ```
+# 🔨 Tuning Usage 
+If you want to tune HyperFree for different tasks, we have provided the `Extract_Backbone_Features.py` script to output multi-scale pretrained features.
+
+# 🔨 Segent Any HSI Usage 
+If you want to use the full-spectrum segmented masks for your own task. You can use the `Seg_Any_HSI.py` script, where the hyper-paramaters below need to be changed.
+```python
+data_path = "./../../Data/hyperspectral_classification/WHU-Hi-LongKou.tif"
+wavelengths = [429.410004,  439.230011,  449.059998,......]
+GSD = 0.456  # Ground sampling distance (m/pixel)
+pred_iou_thresh = 0.6  # Controling the model's predicted mask quality in range [0, 1].
+stability_score_thresh = 0.6  # Controling the stability of the mask in range [0, 1].
+```
+
 # ⭐ Citation
 
 ```
