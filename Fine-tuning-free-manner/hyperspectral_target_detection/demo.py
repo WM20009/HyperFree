@@ -49,8 +49,9 @@ img = sio.loadmat(img_pth)['data']
 gt = sio.loadmat(img_pth)['map']
 
 if img.max() > 500:
-    img_uint8 = img/(img.max()/500)
-    img_uint8 = enhance_contrast_histogram(img_uint8)
+    #img_uint8 = img/(img.max()/500)
+    #img_uint8 = enhance_contrast_histogram(img_uint8)
+    img_uint8 = img
 else:
     img_normalized = (img - img.min()) / (img.max() - img.min())
     img_uint8 = (255 * img_normalized).astype(np.uint8)
