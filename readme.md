@@ -31,7 +31,8 @@
 
 # 🔥 Update
 **2025.04.06**
-- Hyper-Seg has been moved to a new website for faster download! **([Hyper-Seg](https://www.wjx.cn/vm/e84nlpp.aspx#))** 
+- Hyper-Seg has been moved to a new website for faster download! **([Hyper-Seg](https://www.wjx.cn/vm/e84nlpp.aspx#))**
+- Some bugs are fixed
 
 **2025.04.05**
 - Checkpoints of HyperFree-l and HyperFree-h are released! **([Huggingface](https://huggingface.co/JingtaoLi/HyperFree/tree/main))** 
