@@ -93,8 +93,7 @@ ckpt_pth = "./../../Ckpt/HyperFree-b.pth"
 save_dir = "./../../Outputs/hyperspectral_classification/"
 
 img = read_img(data_path)
-if img.max() > 500:
-    img = img/(img.max()/500)
+
 
 height, width = img.shape[0], img.shape[1]
 
