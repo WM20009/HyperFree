@@ -53,8 +53,9 @@ for i in range(len(img1_paths)):
            
     img1 = read_img(path1)
     if img1.max() > 500:
-        img1 = img1/(img1.max()/500)
-        img1 = enhance_contrast_histogram(img1)
+        #img1 = img1/(img1.max()/500)
+        #img1 = enhance_contrast_histogram(img1)
+        pass
     else:
         img1 = (img1 - img1.min()) / (img1.max() - img1.min())
         img1 = (255 * img1).astype(np.uint8)
@@ -62,8 +63,9 @@ for i in range(len(img1_paths)):
 
     img2 = read_img(path2)
     if img2.max() > 500:
-        img2 = img2/(img2.max()/500)
-        img2 = enhance_contrast_histogram(img2)
+        #img2 = img2/(img2.max()/500)
+        #img2 = enhance_contrast_histogram(img2)
+        pass
     else:
         img2 = (img2 - img2.min()) / (img2.max() - img2.min())
         img2 = (255 * img2).astype(np.uint8)
