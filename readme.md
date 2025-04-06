@@ -1,4 +1,4 @@
-[
+
 <div align="center">
 
 <h1>HyperFree: A Channel-adaptive and Tuning-free Foundation Model for Hyperspectral Remote Sensing Imagery (CVPR2025)</h1>
@@ -30,7 +30,10 @@
 </p >
 
 # 🔥 Update
-**2025.04.6**
+**2025.04.06**
+- Hyper-Seg has been moved to a new website for faster download! **([Hyper-Seg](https://www.wjx.cn/vm/e84nlpp.aspx#))** 
+
+**2025.04.05**
 - Checkpoints of HyperFree-l and HyperFree-h are released! **([Huggingface](https://huggingface.co/JingtaoLi/HyperFree/tree/main))** 
 
 **2025.02.27**
@@ -167,4 +170,3 @@ Li, Jingtao, et al. "HyperFree: A Channel-adaptive and Tuning-free Foundation Mo
 # 💖 Acknowledgement
 This project is based on [SAM](https://segment-anything.com/). Thank them for bringing prompt engineering from NLP into the visual field!<br>
 
-](http://rsidea-whu-hi.mikecrm.com/dXFA4Pu)
