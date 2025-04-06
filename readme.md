@@ -25,7 +25,7 @@
   <a href="#-Pretrained-Checkpoint">Pretrained Checkpoint</a> |
   <a href="#-Tuning-free-Usage">Tuning-free Usage</a> |
   <a href="#-Tuning-Usage">Tuning Usage</a> |
-  <a href="#-Segent-Any-HSI-Usage">Segent Any HSI Usage</a> |
+  <a href="#-Segment-Any-HSI-Usage">Segment Any HSI Usage</a> |
   <a href="#-Acknowledgement">Acknowledgement</a>
 </p >
 
@@ -143,7 +143,7 @@ ratio_threshold = 0.76 # a float, pixels with the change score higher than ratio
 # 🔨 Tuning Usage 
 If you want to tune HyperFree for different tasks, we have provided the `Extract_Backbone_Features.py` script to output multi-scale pretrained features.
 
-# 🔨 Segent Any HSI Usage 
+# 🔨 Segment Any HSI Usage 
 If you want to use the full-spectrum segmented masks for your own task. You can use the `Seg_Any_HSI.py` script, where the hyper-paramaters below need to be changed.
 ```python
 data_path = "./../../Data/hyperspectral_classification/WHU-Hi-LongKou.tif"
