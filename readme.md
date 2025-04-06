@@ -94,7 +94,7 @@ HyperFree is mainly tested with ViT-b version and the corresponding checkpoint i
 
 HyperFree can complete five tasks including multi-class classification, one-class classification, target detection, anomaly detection, and change detection in tuning-free manner. We have provided both sample data ([Data](https://huggingface.co/JingtaoLi/HyperFree/tree/main) folder) and corresponding scripts (Fine-tuning-free-manner Folder).
 
-**Tips**: In practice, we find that preprocessing operations such as removing noise bands and contrast enhancement can significantly improve the processing performance
+**Tips**: In practice, we find that preprocessing operations such as selecting discriminative bands and contrast enhancement can significantly improve the processing performance
 
 1. **Hyperspectral multi-class classification**. For each new image, change the below hyper-paramaters for **promptable classification**.
 ```python
