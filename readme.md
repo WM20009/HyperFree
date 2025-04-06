@@ -30,6 +30,8 @@
 </p >
 
 # 🔥 Update
+**2025.04.6**
+- Checkpoints of HyperFree-l and HyperFree-h are released! **([Huggingface](https://huggingface.co/JingtaoLi/HyperFree/tree/main))** 
 
 **2025.02.27**
 - HyperFree is accepted by CVPR2025! **([paper](https://rsidea.whu.edu.cn/HyperFree.pdf))** 
@@ -79,6 +81,11 @@ Overview of HyperFree.
 
 # 🚀 Pretrained Checkpoint
 HyperFree is mainly tested with ViT-b version and the corresponding checkpoint is available at [Hugging Face](https://huggingface.co/JingtaoLi/HyperFree/tree/main). Download it and put in the Ckpt folder.
+| Method | Backbone | Model Weights |
+| :------- | :------: | :------: |
+| HyperFree-b | ViT-b | [Hugging Face](https://huggingface.co/JingtaoLi/HyperFree/blob/main/Ckpt/HyperFree-b.pth)| 
+| HyperFree-l | ViT-l | [Hugging Face](https://huggingface.co/JingtaoLi/HyperFree/blob/main/Ckpt/HyperFree-l.pth)|
+| HyperFree-h | ViT-h | [Hugging Face](https://huggingface.co/JingtaoLi/HyperFree/blob/main/Ckpt/HyperFree-h.pth)| 
 
 # 🔨 Tuning-free Usage 
 
