@@ -93,6 +93,7 @@ mask_generator = SamAutomaticMaskGenerator(
     model=HyperFree,
     pred_iou_thresh=pred_iou_thresh,
     stability_score_thresh=stability_score_thresh,
+    points_per_side = 32, # set 48 or 64 for more masks
 )
 
 few_shots = []  # Storing binary maps for each class, where the non-zero location represents the corresponding sample
