@@ -129,6 +129,7 @@ if __name__ == '__main__':
         model=HyperFree,
         pred_iou_thresh=pred_iou_thresh,
         stability_score_thresh=stability_score_thresh,
+        points_per_side = 32, # set 48 or 64 for more dense masks
     )
 
     few_shot_label = np.zeros((height, width))  # Store the binary graph of the interested class
