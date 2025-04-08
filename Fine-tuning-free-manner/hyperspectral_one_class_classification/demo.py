@@ -141,7 +141,7 @@ if __name__ == '__main__':
         image=img_uint8,
         few_shot_label=few_shot_label,
         class_prior=class_prior,
-        wavelengths=wavelengths,
+        spectral_lengths=wavelengths,
         feature_index_id=feature_index_id,
         GSD=GSD
     )
