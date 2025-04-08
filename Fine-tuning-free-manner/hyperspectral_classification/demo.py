@@ -115,7 +115,7 @@ classification_maps_each_class, classification_map = hyperspectral_classificatio
     mask_generator=mask_generator,
     image=img_uint8,
     few_shots=few_shots,
-    wavelengths=wavelengths,
+    spectral_lengths=wavelengths,
     feature_index_id=feature_index_id,
     GSD=GSD
 )
