@@ -40,7 +40,7 @@ evaluator = Evaluator(2)
 ckpt_pth = "./../../Ckpt/HyperFree-b.pth"
 save_dir = './../../Outputs/hyperspectral_change_detection/'
 GSD = 30 # Ground sampling distance (m/pixel)
-ratio_threshold = 0.76 # a float, pixels with the change score higher than ratio_threshold quantile are considered as changes
+ratio_threshold = 0.74 # a float, pixels with the change score higher than ratio_threshold quantile are considered as changes
 
 HyperFree = HyperFree_model_registry["vit_b"](checkpoint=ckpt_pth).to(device)
 HyperFree = HyperFree.to(device)
