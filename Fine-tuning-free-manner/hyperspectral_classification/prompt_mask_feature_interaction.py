@@ -31,7 +31,7 @@ def hyperspectral_classification(mask_generator, image, few_shots, spectral_leng
     anns = mask_generator.generate(image, spectral_lengths, GSD)
     mask = mask_generator.anns2mask(anns)
 
-    mask_generator.predictor.set_image(image, False, spectral_lengths, GSD)
+    mask_generator.predictor.set_image(image, True, spectral_lengths, GSD)
     all_features = mask_generator.predictor.model.image_encoder.multi_stage_features[feature_index_id]
     all_features = all_features.detach().cpu()
     all_features = F.interpolate(all_features, (max(mask.shape[1], mask.shape[2]),max(mask.shape[1], mask.shape[2]) ))
