@@ -31,7 +31,7 @@ wavelengths = [
 
 pred_iou_thresh = 0.6 # Controling the model's predicted mask quality in range [0, 1].
 stability_score_thresh = 0.5 # Controling the stability of the mask in range [0, 1].
-cosine_simi_thresh = 0.94 # If the corresponding features of masks are higher than the threshold, they are considered to be of the same type 
+cosine_simi_thresh = 0.96 # If the corresponding features of masks are higher than the threshold, they are considered to be of the same type 
 feature_index_id = 5 # Deciding which stage of encoder features to use
 GSDS = 0.07 # Ground sampling distance (m/pixel)
 
