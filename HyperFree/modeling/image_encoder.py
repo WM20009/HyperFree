@@ -64,6 +64,7 @@ class ImageEncoderViT(nn.Module):
         window_size: int = 0,
         global_attn_indexes: Tuple[int, ...] = (),
         in_chans_spectral = 85,
+        merge_indexs = [3, 6, 8, 11], # for Vit-b version
     ) -> None:
         """
         Args:
@@ -90,8 +91,6 @@ class ImageEncoderViT(nn.Module):
         self.depth = depth
         self.patch_size = patch_size
         self.out_chans = out_chans
-
-        self.out_indexs = global_attn_indexes
         
         self.pos_embed_mlp = MLP(self.embed_dim, self.embed_dim//2, self.embed_dim, 3, sigmoid_output=False)
 
@@ -155,6 +154,17 @@ class ImageEncoderViT(nn.Module):
         self.block_spectral_weight_bank_w = nn.Parameter(torch.randn((self.embed_dim, len(weight_bank_wavelength), patch_size, patch_size)))
         self.block_spectral_weight_bank_b = nn.Parameter(torch.randn(self.embed_dim))
 
+        self.merge_indexs = merge_indexs
+        self.global_attn_indexes = global_attn_indexes
+        # self.multi_scale_convs = nn.ModuleList([
+        #     nn.Sequential(
+        #         nn.Conv2d(embed_dim, embed_dim, kernel_size=3, stride=2, padding=1, bias=True),  # 保持特征图尺寸‌:ml-citation{ref="6" data="citationList"}
+        #         nn.GELU()
+        #     )
+        #     for _ in range(len(self.merge_indexs))]) if self.merge_indexs != None else None
+        self.multi_scale_convs = nn.ModuleList([
+            PatchMerging(dim=embed_dim)
+            for i in range(len(self.merge_indexs))]) if self.merge_indexs != None else None
 
     def convert_semantic_feature(self, backbone_features):
         backbone_features = backbone_features.permute((0,2,3,1))
@@ -187,6 +197,7 @@ class ImageEncoderViT(nn.Module):
 
         Returns:  multi-stage backbone features
         """
+
 
         is_hy = False
         is_mu = False
@@ -256,14 +267,22 @@ class ImageEncoderViT(nn.Module):
         x_feature = x_feature + scale_aware_pos_embed
         
         self.multi_stage_features = []
-        self.multi_stage_features.append(x_feature.permute(0, 3, 1, 2))
 
+        multi_scale_merge_index = 0
         for i, blk in enumerate(self.blocks):
-            # x_feature = checkpoint(blk, x_feature, use_reentrant=True)
-            x_feature = blk(x_feature)
-            if i in self.out_indexs:
-                self.multi_stage_features.append(x_feature.permute(0, 3, 1, 2))
-            
+            if self.patch_size <= 8:
+                x_feature = torch.utils.checkpoint.checkpoint(blk, x_feature, use_reentrant=True)
+            else:
+                x_feature = blk(x_feature)
+
+            if self.merge_indexs != None:
+                if i in [self.merge_indexs[0], self.global_attn_indexes[0], self.global_attn_indexes[2]]:
+                    self.multi_stage_features.append(x_feature.permute(0, 3, 1, 2))
+
+                if i in self.merge_indexs:
+                    x_feature = self.multi_scale_convs[multi_scale_merge_index](x_feature)
+                    multi_scale_merge_index += 1
+
         x_feature = self.neck(x_feature.permute(0, 3, 1, 2))
         self.multi_stage_features.append(x_feature)
 
@@ -573,6 +592,52 @@ def add_decomposed_rel_pos(
 
     return attn
 
+
+class PatchMerging(nn.Module):
+    r""" Patch Merging Layer.
+
+    Args:
+        input_resolution (tuple[int]): Resolution of input feature.
+        dim (int): Number of input channels.
+        norm_layer (nn.Module, optional): Normalization layer.  Default: nn.LayerNorm
+    """
+
+    def __init__(self, dim, norm_layer=nn.LayerNorm):
+        super().__init__()
+        self.dim = dim
+        self.reduction = nn.Linear(4 * dim, dim, bias=False)
+        self.norm = norm_layer(4 * dim)
+
+    def forward(self, x):
+        """
+        x: B, H*W, C
+        """
+        B, H, W, C = x.shape
+        assert H % 2 == 0 and W % 2 == 0, f"x size ({H}*{W}) are not even."
+
+        x = x.view(B, H, W, C)
+
+        x0 = x[:, 0::2, 0::2, :]  # B H/2 W/2 C
+        x1 = x[:, 1::2, 0::2, :]  # B H/2 W/2 C
+        x2 = x[:, 0::2, 1::2, :]  # B H/2 W/2 C
+        x3 = x[:, 1::2, 1::2, :]  # B H/2 W/2 C
+        x = torch.cat([x0, x1, x2, x3], -1)  # B H/2 W/2 4*C
+        x = x.view(B, -1, 4 * C)  # B H/2*W/2 4*C
+
+        x = self.norm(x)
+        x = self.reduction(x)
+        x = x.view(B, H // 2, W // 2, C)
+
+        return x
+
+    def extra_repr(self) -> str:
+        return f"input_resolution={self.input_resolution}, dim={self.dim}"
+
+    def flops(self):
+        H, W = self.input_resolution
+        flops = H * W * self.dim
+        flops += (H // 2) * (W // 2) * 4 * self.dim * 2 * self.dim
+        return flops
 
 class PatchEmbed(nn.Module):
     """
