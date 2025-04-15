@@ -59,7 +59,7 @@ else:
 ratio = 1024/(max(img.shape[0], img.shape[1]))
 GSDS = GSDS/ratio
 GSDS = torch.tensor([GSDS])
-HyperFree = HyperFree_model_registry["vit_b"](checkpoint=ckpt_pth).to(device)
+HyperFree = HyperFree_model_registry["vit_b"](checkpoint=ckpt_pth, encoder_global_attn_indexes=-1, merge_indexs = None).to(device)
 HyperFree = HyperFree.to(device)
 mask_generator = SamAutomaticMaskGenerator(HyperFree, pred_iou_thresh = pred_iou_thresh, stability_score_thresh = stability_score_thresh, points_per_side=64)
 
