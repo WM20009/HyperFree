@@ -36,7 +36,7 @@ encoder_global_attn_indexes=[11, 17, 23], merge_indexs=[6, 24]):
 
 
 def build_HyperFree_vit_b(checkpoint=None, image_size=1024, vit_patch_size = 16,
-encoder_global_attn_indexes=[[5, 8, 11]], merge_indexs=[3, 12]):
+encoder_global_attn_indexes=[5, 8, 11], merge_indexs=[3, 12]):
     return _build_HyperFree(
         encoder_embed_dim=768,
         encoder_depth=12,
