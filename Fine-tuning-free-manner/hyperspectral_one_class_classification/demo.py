@@ -123,7 +123,7 @@ if __name__ == '__main__':
     GSD = GSD / ratio
     GSD = torch.tensor([GSD])
 
-    HyperFree = HyperFree_model_registry["vit_b"](checkpoint=ckpt_pth).to(device)
+    HyperFree = HyperFree_model_registry["vit_b"](checkpoint=ckpt_pth, encoder_global_attn_indexes=-1, merge_indexs = None).to(device)
     HyperFree = HyperFree.to(device)
     mask_generator = SamAutomaticMaskGenerator(
         model=HyperFree,
