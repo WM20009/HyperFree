@@ -4,12 +4,16 @@ from functools import partial
 from HyperFree.modeling import ImageEncoderViT, MaskDecoder, PromptEncoder, Sam, TwoWayTransformer
 
 
-def build_HyperFree_vit_h(checkpoint=None):
+def build_HyperFree_vit_h(checkpoint=None, image_size=1024, vit_patch_size = 16,
+encoder_global_attn_indexes=[15, 23, 31], merge_indexs=[8, 32]):
     return _build_HyperFree(
         encoder_embed_dim=1280,
         encoder_depth=32,
         encoder_num_heads=16,
-        encoder_global_attn_indexes=[7, 15, 23, 31],
+        encoder_global_attn_indexes=[7, 15, 23, 31] if encoder_global_attn_indexes == -1 else encoder_global_attn_indexes,
+        merge_indexs=merge_indexs,
+        vit_patch_size=vit_patch_size, 
+        image_size=image_size,
         checkpoint=checkpoint,
     )
 
@@ -17,24 +21,31 @@ def build_HyperFree_vit_h(checkpoint=None):
 build_HyperFree = build_HyperFree_vit_h
 
 
-def build_HyperFree_vit_l(checkpoint=None):
+def build_HyperFree_vit_l(checkpoint=None, image_size=1024, vit_patch_size = 16,
+encoder_global_attn_indexes=[11, 17, 23], merge_indexs=[6, 24]):
     return _build_HyperFree(
         encoder_embed_dim=1024,
         encoder_depth=24,
         encoder_num_heads=16,
-        encoder_global_attn_indexes=[5, 11, 17, 23],
+        encoder_global_attn_indexes=[5, 11, 17, 23] if encoder_global_attn_indexes == -1 else encoder_global_attn_indexes,
+        merge_indexs=merge_indexs,
+        vit_patch_size=vit_patch_size, 
+        image_size=image_size,
         checkpoint=checkpoint,
     )
 
 
-def build_HyperFree_vit_b(checkpoint=None, image_size=1024):
+def build_HyperFree_vit_b(checkpoint=None, image_size=1024, vit_patch_size = 16,
+encoder_global_attn_indexes=[[5, 8, 11]], merge_indexs=[3, 12]):
     return _build_HyperFree(
         encoder_embed_dim=768,
         encoder_depth=12,
         encoder_num_heads=12,
-        encoder_global_attn_indexes=[2, 5, 8, 11],
-        checkpoint=checkpoint,
+        encoder_global_attn_indexes=[2, 5, 8, 11] if encoder_global_attn_indexes == -1 else encoder_global_attn_indexes,
+        merge_indexs=merge_indexs,
+        vit_patch_size=vit_patch_size, 
         image_size=image_size,
+        checkpoint=checkpoint,
     )
 
 
@@ -57,6 +68,9 @@ def load_and_resize_params(model, checkpoint_path):
                     v = F.interpolate(v.permute((0,3,1,2)), size=(model_dict[k].shape[1], model_dict[k].shape[2]), mode='nearest').permute((0,2,3,1))
                 elif 'rel_pos' in k:
                     v = F.interpolate(v.unsqueeze(0).unsqueeze(0), size=(model_dict[k].shape[0], model_dict[k].shape[1]),).squeeze(0).squeeze(0)
+                elif 'weight_bank' in k:
+                    v = F.interpolate(v, size=(model_dict[k].shape[2], model_dict[k].shape[3]), mode='nearest')
+
             model_dict[k] = v
     
     model.load_state_dict(model_dict, strict=False)
@@ -68,11 +82,12 @@ def _build_HyperFree(
     encoder_depth,
     encoder_num_heads,
     encoder_global_attn_indexes,
+    merge_indexs,
+    vit_patch_size,
     checkpoint=None,
     image_size=1024,
 ):
     prompt_embed_dim = 256
-    vit_patch_size = 16
     image_embedding_size = image_size // vit_patch_size
     hyperfree = Sam(
         image_encoder=ImageEncoderViT(
@@ -86,6 +101,7 @@ def _build_HyperFree(
             qkv_bias=True,
             use_rel_pos=True,
             global_attn_indexes=encoder_global_attn_indexes,
+            merge_indexs = merge_indexs,
             window_size=14,
             out_chans=prompt_embed_dim,
         ),
