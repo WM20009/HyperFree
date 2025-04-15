@@ -270,10 +270,10 @@ class ImageEncoderViT(nn.Module):
 
         multi_scale_merge_index = 0
         for i, blk in enumerate(self.blocks):
-            if self.patch_size <= 8:
-                x_feature = torch.utils.checkpoint.checkpoint(blk, x_feature, use_reentrant=True)
-            else:
-                x_feature = blk(x_feature)
+            #if self.patch_size <= 8:
+            #    x_feature = torch.utils.checkpoint.checkpoint(blk, x_feature, use_reentrant=True)
+            #else:
+            x_feature = blk(x_feature)
 
             if self.merge_indexs != None:
                 if i in [self.merge_indexs[0], self.global_attn_indexes[0], self.global_attn_indexes[2]]:
