@@ -42,7 +42,7 @@ save_dir = './../../Outputs/hyperspectral_change_detection/'
 GSD = 30 # Ground sampling distance (m/pixel)
 ratio_threshold = 0.74 # a float, pixels with the change score higher than ratio_threshold quantile are considered as changes
 
-HyperFree = HyperFree_model_registry["vit_b"](checkpoint=ckpt_pth).to(device)
+HyperFree = HyperFree_model_registry["vit_b"](checkpoint=ckpt_pth, encoder_global_attn_indexes=-1, merge_indexs = None).to(device)
 HyperFree = HyperFree.to(device)
 mask_generator = SamAutomaticMaskGenerator(HyperFree, pred_iou_thresh = pred_iou_thresh, stability_score_thresh = stability_score_thresh, points_per_side=64)
 
