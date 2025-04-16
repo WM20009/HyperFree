@@ -218,7 +218,7 @@ class UPerNet(nn.Module):
         self.GSD = GSD
         self.wavelengths = wavelengths
 
-        self.ppm = PyramidPoolingModule(256, self.fpn_dim)
+        self.ppm = PyramidPoolingModule(768, self.fpn_dim)
         self.fpn = FeaturePyramidNet(self.fpn_dim)
         self.fuse = ConvBnAct(fpn_dim*4, fpn_dim, 1, 1, 0)
         self.seg = nn.Sequential(ConvBnAct(fpn_dim, fpn_dim, 1, 1, 0), nn.Conv2d(fpn_dim, num_class, 1, 1, 0, bias=True))
