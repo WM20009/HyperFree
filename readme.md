@@ -160,14 +160,8 @@ stability_score_thresh = 0.6  # Controling the stability of the mask in range [0
 # ⭐ Citation
 
 ```
-@inproceedings{li2025hyperfree,
-  title={HyperFree: A Channel-adaptive and Tuning-free Foundation Model for Hyperspectral Remote Sensing Imagery},
-  author={Li Jingtao and Liu yingyi and Wang Xinyu and Peng Yunning and Sun Chen and Wang Shaoyu and Sun Zhendong and Ke Tian and Jiang Xiao and Lu Tangwei and Zhao anran and Zhong Yanfei},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  year={2025}
-}
-
-Li, Jingtao, et al. "HyperFree: A Channel-adaptive and Tuning-free Foundation Model for Hyperspectral Remote Sensing Imagery." arXiv preprint arXiv:2503.21841 (2025).
+Li J, Liu Y, Wang X, et al. HyperFree: A Channel-adaptive and Tuning-free Foundation Model
+for Hyperspectral Remote Sensing Imagery[J]. arXiv preprint arXiv:2503.21841, 2025.
 ``` 
 
 
