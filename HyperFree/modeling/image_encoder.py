@@ -276,7 +276,7 @@ class ImageEncoderViT(nn.Module):
                 x_feature = blk(x_feature)
 
             if self.merge_indexs != None:
-                if i in [self.merge_indexs[0], self.global_attn_indexes[0], self.global_attn_indexes[1], self.global_attn_indexes[2]]:
+                if i in [self.merge_indexs[0], self.global_attn_indexes[0], self.global_attn_indexes[2]]:
                     self.multi_stage_features.append(x_feature.permute(0, 3, 1, 2))
 
                 if i in self.merge_indexs:
@@ -284,8 +284,7 @@ class ImageEncoderViT(nn.Module):
                     multi_scale_merge_index += 1
 
         x_feature = self.neck(x_feature.permute(0, 3, 1, 2))
-        if self.patch_size == 16:
-            self.multi_stage_features.append(x_feature)
+        self.multi_stage_features.append(x_feature)
 
         return self.multi_stage_features
 
