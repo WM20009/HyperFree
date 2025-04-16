@@ -282,6 +282,8 @@ class ImageEncoderViT(nn.Module):
                 if i in self.merge_indexs:
                     x_feature = self.multi_scale_convs[multi_scale_merge_index](x_feature)
                     multi_scale_merge_index += 1
+            elif i in self.global_attn_indexes:
+                self.multi_stage_features.append(x_feature.permute(0, 3, 1, 2))
 
         x_feature = self.neck(x_feature.permute(0, 3, 1, 2))
         self.multi_stage_features.append(x_feature)
