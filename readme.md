@@ -159,8 +159,8 @@ wavelengths = [429.410004,  439.230011,  449.059998,......]
 GSD = 0.456  # Ground sampling distance (m/pixel)
 pred_iou_thresh = 0.6  # Controling the model's predicted mask quality in range [0, 1].
 stability_score_thresh = 0.6  # Controling the stability of the mask in range [0, 1].
-2. **Segment Cerain Mask** If you only want to segment certain mask given point prompt, please use `Seg_Any_HSI_given_one_prompt.py` script.
 ```
+2. **Segment Cerain Mask** If you only want to segment certain mask given point prompt, please use `Seg_Any_HSI_given_one_prompt.py` script. Each prompt would output three masks.
 
 # ⭐ Citation
 
