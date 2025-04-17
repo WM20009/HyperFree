@@ -30,8 +30,11 @@
 </p >
 
 # 🔥 Update
+**2025.04.17**
+- The script to tune HyperFree decoder only for different semantic segmentation tasks. `Efficient_decoder_tuning.py`
+
 **2025.04.15**
-- UperNet with HyperFree as backbone is uploaded for tuning comparison. `UperNet-HyperFree-for-Tuning.py` 
+- UperNet with HyperFree as backbone is uploaded for full tuning comparison. `Full-Tuning-with-UperNet.py` 
 
 **2025.04.06**
 - Hyper-Seg has been moved to a new website for faster download! **([Hyper-Seg](https://www.wjx.cn/vm/e84nlpp.aspx#))**
@@ -145,7 +148,8 @@ GSD = 30 # Ground sampling distance (m/pixel)
 ratio_threshold = 0.76 # a float, pixels with the change score higher than ratio_threshold quantile are considered as changes
 ```
 # 🔨 Tuning Usage 
-If you want to tune HyperFree for different tasks, we have provided the `UperNet-HyperFree-for-Tuning.py` script to output multi-scale pretrained features.
+1. **Full-tuning**. If you want to tune the whole HyperFree, we have provided the `Full-Tuning-with-UperNet.py` to load the model.
+2. **Efficient-tuning**. If you want to tune the HyperFree decoder only, we have provided the `Efficient_decoder_tuning.py` to load the model.
 
 # 🔨 Segment Any HSI Usage 
 If you want to use the full-spectrum segmented masks for your own task. You can use the `Seg_Any_HSI.py` script, where the hyper-paramaters below need to be changed.
