@@ -5,7 +5,7 @@ from HyperFree.modeling import ImageEncoderViT, MaskDecoder, PromptEncoder, Sam,
 
 
 def build_HyperFree_vit_h(checkpoint=None, image_size=1024, vit_patch_size = 16,
-encoder_global_attn_indexes=[15, 23, 31], merge_indexs=[8, 32]):
+encoder_global_attn_indexes=[15, 23, 31], merge_indexs=[8, 32], class_number = -1):
     return _build_HyperFree(
         encoder_embed_dim=1280,
         encoder_depth=32,
@@ -15,6 +15,7 @@ encoder_global_attn_indexes=[15, 23, 31], merge_indexs=[8, 32]):
         vit_patch_size=vit_patch_size, 
         image_size=image_size,
         checkpoint=checkpoint,
+        class_number = class_number,
     )
 
 
@@ -22,7 +23,7 @@ build_HyperFree = build_HyperFree_vit_h
 
 
 def build_HyperFree_vit_l(checkpoint=None, image_size=1024, vit_patch_size = 16,
-encoder_global_attn_indexes=[11, 17, 23], merge_indexs=[6, 24]):
+encoder_global_attn_indexes=[11, 17, 23], merge_indexs=[6, 24], class_number = -1):
     return _build_HyperFree(
         encoder_embed_dim=1024,
         encoder_depth=24,
@@ -32,11 +33,12 @@ encoder_global_attn_indexes=[11, 17, 23], merge_indexs=[6, 24]):
         vit_patch_size=vit_patch_size, 
         image_size=image_size,
         checkpoint=checkpoint,
+        class_number = class_number,
     )
 
 
 def build_HyperFree_vit_b(checkpoint=None, image_size=1024, vit_patch_size = 16,
-encoder_global_attn_indexes=[5, 8, 11], merge_indexs=[3, 12]):
+encoder_global_attn_indexes=[5, 8, 11], merge_indexs=[3, 12], class_number = -1):
     return _build_HyperFree(
         encoder_embed_dim=768,
         encoder_depth=12,
@@ -46,6 +48,7 @@ encoder_global_attn_indexes=[5, 8, 11], merge_indexs=[3, 12]):
         vit_patch_size=vit_patch_size, 
         image_size=image_size,
         checkpoint=checkpoint,
+        class_number = class_number,
     )
 
 
@@ -86,6 +89,7 @@ def _build_HyperFree(
     vit_patch_size,
     checkpoint=None,
     image_size=1024,
+    class_number = -1,
 ):
     prompt_embed_dim = 256
     image_embedding_size = image_size // vit_patch_size
@@ -122,6 +126,7 @@ def _build_HyperFree(
             transformer_dim=prompt_embed_dim,
             iou_head_depth=3,
             iou_head_hidden_dim=256,
+            class_number = class_number
         ),
     )
 
