@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 from skimage.transform import resize
 
 """
-Supprting tuning HyperFree with UperNet method
+Supprting full tuning HyperFree with UperNet method
 """
 
 device = 'cuda:0'
