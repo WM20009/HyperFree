@@ -152,7 +152,7 @@ ratio_threshold = 0.76 # a float, pixels with the change score higher than ratio
 2. **Efficient-tuning**. If you want to tune the HyperFree decoder only, we have provided the `Efficient_decoder_tuning.py` to load the model.
 
 # 🔨 Segment Any HSI Usage similar to SAM
-1. **Segment Everyting**If you want to use the full-spectrum segmented masks for your own task. Please use the `Seg_Any_HSI.py` script, where the hyper-paramaters below need to be changed.
+1. **Segment Everyting** If you want to use the full-spectrum segmented masks for your own task. Please use the `Seg_Any_HSI.py` script, where the hyper-paramaters below need to be changed.
 ```python
 data_path = "./../../Data/hyperspectral_classification/WHU-Hi-LongKou.tif"
 wavelengths = [429.410004,  439.230011,  449.059998,......]
