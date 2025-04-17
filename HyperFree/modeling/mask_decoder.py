@@ -15,6 +15,7 @@ class MaskDecoder(nn.Module):
         activation: Type[nn.Module] = nn.GELU,
         iou_head_depth: int = 3,
         iou_head_hidden_dim: int = 256,
+        class_number = -1,
     ) -> None:
         """
         Predicts masks given an image and prompt embeddings, using a
@@ -31,6 +32,7 @@ class MaskDecoder(nn.Module):
             mask quality
           iou_head_hidden_dim (int): the hidden dimension of the MLP
             used to predict mask quality
+          class_number: the number of semantic classes for decoder-only tuning
         """
         super().__init__()
         self.transformer_dim = transformer_dim
@@ -41,6 +43,7 @@ class MaskDecoder(nn.Module):
         self.iou_token = nn.Embedding(1, transformer_dim)
         self.num_mask_tokens = num_multimask_outputs + 1
         self.mask_tokens = nn.Embedding(self.num_mask_tokens, transformer_dim)
+        self.class_number = class_number
 
         self.output_upscaling = nn.Sequential(
             nn.ConvTranspose2d(transformer_dim, transformer_dim // 4, kernel_size=2, stride=2),
@@ -59,6 +62,9 @@ class MaskDecoder(nn.Module):
         self.iou_prediction_head = MLP(
             transformer_dim, iou_head_hidden_dim, self.num_mask_tokens, iou_head_depth
         )
+
+        if self.class_number != -1:
+            self.class_seg_head = nn.Conv2d(transformer_dim // 8, self.class_number, 3, 1, 1)
 
     def forward(
         self,
@@ -91,6 +97,10 @@ class MaskDecoder(nn.Module):
         )
 
         # Select the correct mask or masks for output
+
+        if self.class_number != -1:
+            return masks
+
         if multimask_output:
             mask_slice = slice(1, None)
         else:
@@ -128,12 +138,15 @@ class MaskDecoder(nn.Module):
         # Upscale mask embeddings and predict masks using the mask tokens
         src = src.transpose(1, 2).view(b, c, h, w)
         self.upscaled_embedding = self.output_upscaling(src)
-        hyper_in_list: List[torch.Tensor] = []
-        for i in range(self.num_mask_tokens):
-            hyper_in_list.append(self.output_hypernetworks_mlps[i](mask_tokens_out[:, i, :]))
-        hyper_in = torch.stack(hyper_in_list, dim=1)
         b, c, h, w = self.upscaled_embedding.shape
-        masks = (hyper_in @ self.upscaled_embedding.view(b, c, h * w)).view(b, -1, h, w)
+        if self.class_number == -1:
+            hyper_in_list: List[torch.Tensor] = []
+            for i in range(self.num_mask_tokens):
+                hyper_in_list.append(self.output_hypernetworks_mlps[i](mask_tokens_out[:, i, :]))
+            hyper_in = torch.stack(hyper_in_list, dim=1)
+            masks = (hyper_in @ self.upscaled_embedding.view(b, c, h * w)).view(b, -1, h, w)
+        else:
+            masks = self.class_seg_head(self.upscaled_embedding)
         
         # Generate mask quality predictions
         iou_pred = self.iou_prediction_head(iou_token_out)
