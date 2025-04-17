@@ -151,14 +151,15 @@ ratio_threshold = 0.76 # a float, pixels with the change score higher than ratio
 1. **Full-tuning**. If you want to tune the whole HyperFree, we have provided the `Full-Tuning-with-UperNet.py` to load the model.
 2. **Efficient-tuning**. If you want to tune the HyperFree decoder only, we have provided the `Efficient_decoder_tuning.py` to load the model.
 
-# 🔨 Segment Any HSI Usage 
-If you want to use the full-spectrum segmented masks for your own task. You can use the `Seg_Any_HSI.py` script, where the hyper-paramaters below need to be changed.
+# 🔨 Segment Any HSI Usage similar to SAM
+1. **Segment Everyting**If you want to use the full-spectrum segmented masks for your own task. Please use the `Seg_Any_HSI.py` script, where the hyper-paramaters below need to be changed.
 ```python
 data_path = "./../../Data/hyperspectral_classification/WHU-Hi-LongKou.tif"
 wavelengths = [429.410004,  439.230011,  449.059998,......]
 GSD = 0.456  # Ground sampling distance (m/pixel)
 pred_iou_thresh = 0.6  # Controling the model's predicted mask quality in range [0, 1].
 stability_score_thresh = 0.6  # Controling the stability of the mask in range [0, 1].
+2. **Segment Cerain Mask** If you only want to segment certain mask given point prompt, please use `Seg_Any_HSI_given_one_prompt.py` script.
 ```
 
 # ⭐ Citation
