@@ -30,6 +30,9 @@
 </p >
 
 # 🔥 Update
+**2025.04.23**
+- Bugs are fixed for tuning-free classification and detection tasks.
+  
 **2025.04.17**
 - The script to tune HyperFree decoder only for different semantic segmentation tasks. `Efficient_decoder_tuning.py`
 
