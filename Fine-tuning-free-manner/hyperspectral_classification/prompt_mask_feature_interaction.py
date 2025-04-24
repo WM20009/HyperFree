@@ -61,7 +61,7 @@ def hyperspectral_classification(mask_generator, image, few_shots, spectral_leng
     mask_number = mask.shape[0]
     classification_map = np.zeros((mask.shape[1], mask.shape[2]), dtype=np.uint8)
     for i in range(mask_number):
-        seg_mask = mask[i:i+1,:,:]
+        seg_mask = mask[-2-i:-1-i,:,:]
         locs = np.where(seg_mask == 1)
         seg_mask_feature = all_features[:,:, locs[1], locs[2]].mean(2)[0,:]
 
