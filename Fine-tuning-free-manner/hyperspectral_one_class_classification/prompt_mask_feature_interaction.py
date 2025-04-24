@@ -61,7 +61,7 @@ def hyperspectral_OCC(mask_generator, image, few_shot_label, class_prior, spectr
 
         for i in range(mask_number - 1):
 
-            seg_mask = mask[i:i + 1, :, :]
+            seg_mask = mask[-2-i:-1-i, :, :]
             locs = np.where(seg_mask == 1)
 
             seg_mask_feature = all_features[:, :, locs[1], locs[2]].mean(2)[0, :]
