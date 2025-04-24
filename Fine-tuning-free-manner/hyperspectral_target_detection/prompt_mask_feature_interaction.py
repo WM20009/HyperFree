@@ -48,7 +48,7 @@ def Hyperspectral_TD(mask_generator, image, target_spectral, cosine_simi_thresh,
     mask_number = mask.shape[0]
     detection_map = np.zeros((mask.shape[1], mask.shape[2]))
     for i in range(mask_number):
-        seg_mask = mask[i:i+1,:,:]
+        seg_mask = mask[-2-i:-1-i,:,:]
         locs = np.where(seg_mask == 1)
 
         seg_mask_feature = all_features[:,:, locs[1], locs[2]].mean(2)[0,:]
