@@ -62,10 +62,10 @@ wavelengths = [
     961.521973, 963.742981, 965.963989, 968.184998, 970.406006, 972.627014,
     974.848022, 977.070007, 979.291016, 981.512024, 983.732971, 985.953979,
     988.174988, 990.395996, 992.617004, 994.838013, 997.059021, 999.280029]
-GSD = 0.456  # Ground sampling distance (m/pixel)
+GSD = 0.463 # Ground sampling distance (m/pixel)
 
-pred_iou_thresh = 0.6  # Controling the model's predicted mask quality in range [0, 1].
-stability_score_thresh = 0.6  # Controling the stability of the mask in range [0, 1].
+pred_iou_thresh = 0.3  # Controling the model's predicted mask quality in range [0, 1].
+stability_score_thresh = 0.4  # Controling the stability of the mask in range [0, 1].
 feature_index_id = 2  # Deciding which stage of encoder features to use
 
 data_path = "./../../Data/hyperspectral_classification/WHU-Hi-LongKou.tif"
@@ -101,15 +101,15 @@ num_classes = 9
 for i in range(num_classes):
     few_shots.append(np.zeros((height, width)))
 
-few_shots[0][120, 324] = 1
-few_shots[1][258, 70] = 1
+few_shots[0][388, 42] = 1
+few_shots[1][231, 42] = 1
 few_shots[2][159, 18] = 1
-few_shots[3][390, 368] = 1
-few_shots[4][210, 338] = 1
-few_shots[5][456, 263] = 1
+few_shots[3][40, 329] = 1
+few_shots[4][192, 285] = 1
+few_shots[5][360, 280] = 1
 few_shots[6][265, 174] = 1
-few_shots[7][135, 108] = 1
-few_shots[8][298, 103] = 1
+few_shots[7][355, 108] = 1
+few_shots[8][34, 238] = 1
 
 classification_maps_each_class, classification_map = hyperspectral_classification(
     mask_generator=mask_generator,
