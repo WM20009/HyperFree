@@ -66,7 +66,7 @@ GSD = 0.463 # Ground sampling distance (m/pixel)
 
 pred_iou_thresh = 0.3  # Controling the model's predicted mask quality in range [0, 1].
 stability_score_thresh = 0.4  # Controling the stability of the mask in range [0, 1].
-feature_index_id = 2  # Deciding which stage of encoder features to use
+feature_index_id = 1  # Deciding which stage of encoder features to use
 
 data_path = "./../../Data/hyperspectral_classification/WHU-Hi-LongKou.tif"
 ckpt_pth = "./../../Ckpt/HyperFree-b.pth"
