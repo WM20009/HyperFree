@@ -44,15 +44,17 @@ def hyperspectral_classification(mask_generator, image, few_shots, spectral_leng
 
         target_locs = np.where(few_shot_label == 1)
         for loc_index in range(len(target_locs[0])):
-            # mask_index = np.where(mask[:,target_locs[0][loc_index], target_locs[1][loc_index]] == 1)[0]
-            # assert mask_index.size != 0, ("The setting hyper-parameters lead to no mask in given target location")
+            mask_index = np.where(mask[:,target_locs[0][loc_index], target_locs[1][loc_index]] == 1)[0]
+            assert mask_index.size != 0, ("The setting hyper-parameters lead to no mask in given target location")
 
-            # few_shot_label = mask[mask_index.tolist(), :, :][0,:,:]
-            # target_locs_t = np.where(few_shot_label == 1)
+            few_shot_label = mask[mask_index.tolist(), :, :][0,:,:]
+            target_locs_t = np.where(few_shot_label == 1)
         
-            # target_feature_t = all_features[0:1, :, (target_locs_t[0]), (target_locs_t[1])]
-            # target_feature_t = target_feature_t.mean((2))[0,:].detach().cpu().numpy()
-            target_feature_t = all_features[0, :, target_locs[0][loc_index], target_locs[1][loc_index]]
+            target_feature_t = all_features[0:1, :, (target_locs_t[0]), (target_locs_t[1])]
+            target_feature_t = target_feature_t.mean((2))[0,:].detach().cpu().numpy()
+
+            # Another way to compute target_feature_t
+            # target_feature_t = all_features[0, :, target_locs[0][loc_index], target_locs[1][loc_index]]
             target_feature.append(target_feature_t)
         
         target_features.append(target_feature)
