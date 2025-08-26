@@ -9,6 +9,7 @@ import torch
 from HyperFree.utils.spectral_process_utils import read_img, write_img
 from HyperFree import SamAutomaticMaskGenerator, HyperFree_model_registry
 from prompt_mask_feature_interaction import Hyperspectral_CD, Evaluator, show_anns, set_random_seed, enhance_contrast_histogram
+import cv2
 
 """
 HyperFree
@@ -78,6 +79,7 @@ for i in range(len(img1_paths)):
     GSDS = torch.tensor([GSDS])
 
     change_map, img1_all_masks, img2_all_masks = Hyperspectral_CD(mask_generator, img1_uint8, img2_uint8, wavelengths, GSDS, ratio_threshold)
+    cv2.imwrite(os.path.join(save_dir, str(i+1) + 'change_map.jpg'),change_map*255)
     show_anns(img1_all_masks, save_dir + str(i+1) + 'img1.jpg')
     show_anns(img2_all_masks, save_dir + str(i+1) + 'img2.jpg')
     evaluator.add_batch(mask.astype('int'), change_map.astype('int'))
