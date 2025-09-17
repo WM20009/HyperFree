@@ -76,6 +76,10 @@ class PromptEncoder(nn.Module):
         labels: torch.Tensor,
         pad: bool,
     ) -> torch.Tensor:
+        """
+           points:shape(batch_size,num_points,2) batch_size means it can process B pictures
+           labels:shape(batch_size,num_points)
+        """
         """Embeds point prompts."""
         points = points + 0.5  # Shift to center of pixel
         if pad:
@@ -91,6 +95,9 @@ class PromptEncoder(nn.Module):
         return point_embedding
 
     def _embed_boxes(self, boxes: torch.Tensor) -> torch.Tensor:
+        """
+        boxes.shape = (batch_size, num_boxes, 4)
+        """
         """Embeds box prompts."""
         boxes = boxes + 0.5  # Shift to center of pixel
         coords = boxes.reshape(-1, 2, 2)
