@@ -42,9 +42,10 @@ class HyperFree_Predictor:
             image in HWC uint8 format, with pixel values in [0, 255].
           image_format (str): The color format of the image, in ['RGB', 'BGR'].
         """
-
+        # set to be tensor(B,C,H,W)
         if not torch.is_tensor(image):
             image = torch.as_tensor(image, device=self.device).permute((2,0,1)).unsqueeze(0).float()
+        # set the longest side to be 1024
         input_image = self.transform.apply_image_torch(image.float())
         input_image = input_image.to(self.device)
         self.set_torch_image(input_image, image.shape[-2:], test_mode, spectral_lengths,GSD=GSD)
@@ -65,19 +66,19 @@ class HyperFree_Predictor:
 
         Arguments:
           transformed_image (torch.Tensor): The input image, with shape
-            1x3xHxW, which has been transformed with ResizeLongestSide.
+            1xCxHxW, which has been transformed with ResizeLongestSide.
           original_image_size (tuple(int, int)): The size of the image
             before transformation, in (H, W) format.
         """
-        # assert (
-        #     len(transformed_image.shape) == 4
-        #     and transformed_image.shape[1] == 3
-        #     and max(*transformed_image.shape[2:]) == self.model.image_encoder.img_size
-        # ), f"set_torch_image input must be BCHW with long side {self.model.image_encoder.img_size}."
+         assert (
+             len(transformed_image.shape) == 4
+             and max(*transformed_image.shape[2:]) == self.model.image_encoder.img_size
+         ), f"set_torch_image input must be BCHW with long side {self.model.image_encoder.img_size}."
         self.reset_image()
 
         self.original_size = original_image_size
         self.input_size = tuple(transformed_image.shape[-2:])
+        # set the image to be 1024*1024
         input_image = self.model.preprocess(transformed_image)
         self.multi_scale_features= self.model.image_encoder(input_image, test_mode, spectral_lengths, GSD)
         self.features = self.multi_scale_features[-1]
@@ -117,6 +118,9 @@ class HyperFree_Predictor:
         spectral_lengths=None, 
         GSD=None
     ) -> None:
+        """
+        just store the last one image embedding feature
+        """
         input_image = self.model.preprocess(transformed_image)
         self.features2 = self.model.image_encoder(input_image, test_mode, spectral_lengths, GSD)[-1]
 
